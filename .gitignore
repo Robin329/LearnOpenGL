@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# ignores following folders
+bin/
+build/
+cmake-build-debug/
