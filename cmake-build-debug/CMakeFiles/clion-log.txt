@@ -1,9 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/local/bin/gmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_VERBOSE_MAKEFILE=ON -G "CodeBlocks - Unix Makefiles" /Users/renbinjiang/workspace/project/LearnOpenGL
--- GLM_INCLUDE_DIR = /opt/homebrew/include
--- GLM included at /opt/homebrew/include
--- Found GLFW3 in /opt/homebrew/include
--- Found ASSIMP: /opt/homebrew/lib/libassimp.dylib
--- Found ASSIMP in /opt/homebrew/include
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/renbinjiang/workspace/project/LearnOpenGL/cmake-build-debug
