@@ -167,7 +167,7 @@ set(6.pbr
 
 set(7.in_practice
     1.debugging
-    2.text_rendering
+#    2.text_rendering
     #3.2d_game
 )
 
