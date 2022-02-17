@@ -1,3 +1,6 @@
 [submodule "ref/Glitter"]
 	path = ref/Glitter
 	url = git@github.com:Polytonic/Glitter.git
+[submodule "ref/LearnOpenGLRemote"]
+	path = ref/LearnOpenGLRemote
+	url = git@github.com:JoeyDeVries/LearnOpenGL.git
