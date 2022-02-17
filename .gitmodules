@@ -1,0 +1,3 @@
+[submodule "ref/Glitter"]
+	path = ref/Glitter
+	url = git@github.com:Polytonic/Glitter.git
