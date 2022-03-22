@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 
 #include <iostream>
+#include <thread>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -31,6 +32,7 @@ int main() {
     glfwTerminate();
     return -1;
   }
+  glfwSetWindowTitle(window, "LearnOpenGL");
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -40,7 +42,11 @@ int main() {
     std::cout << "Failed to initialize GLAD" << std::endl;
     return -1;
   }
-
+  int major, minor, rev;
+  glfwGetVersion(&major, &minor, &rev);
+  const char * verStr = glfwGetVersionString();
+  std::cout << "major:" << major << std::endl << "minor:" << minor << std::endl << "rev:" << rev <<  std::endl;
+  std::cout << "verString:" << verStr << std::endl;
   // render loop
   // -----------
   while (!glfwWindowShouldClose(window)) {
@@ -50,7 +56,7 @@ int main() {
 
     // render
     // ------
-    glClearColor(0.0f, 0.1f, 0.3f, 1.0f);
+    glClearColor(0.0f, 0.5f, 0.5f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
@@ -72,6 +78,63 @@ int main() {
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
+  int xPos, yPos;
+  glfwGetWindowPos(window, &xPos, &yPos);
+//  std::cout << "x = " <<  xPos << " y = " << yPos << std::endl;
+  // A : left move window
+  // D : right move window
+  // S : down move window
+  // W : up move window
+  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+    xPos -= 10;
+    glfwSetWindowPos(window, xPos, yPos);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    xPos += 10;
+    glfwSetWindowPos(window, xPos, yPos);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    yPos += 10;
+    glfwSetWindowPos(window, xPos, yPos);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    yPos -= 10;
+    glfwSetWindowPos(window, xPos, yPos);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  
+  // resize window size:
+  // L : resize w
+  // J : shrink w
+  // I : resize h
+  // K : shrink h
+  int w, h;
+  glfwGetWindowSize(window, &w, &h);
+  if(glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
+    w -= 2;
+    glfwSetWindowSize(window, w, h);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  if(glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+    w += 2;
+    glfwSetWindowSize(window, w, h);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  if(glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
+    h += 2;
+    glfwSetWindowSize(window, w, h);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  if(glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
+    h -= 2;
+    glfwSetWindowSize(window, w, h);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+  glfwGetKeyName(GLFW_KEY_W, 0);
+  
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
