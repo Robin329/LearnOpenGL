@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <learnopengl/common.h>
 
 #include <iostream>
 #include <thread>
@@ -11,6 +12,8 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+Common *Common::m_sInstance = nullptr;
+Common *Instance = Common::getInstance();
 int main() {
   // glfw: initialize and configure
   // ------------------------------
@@ -34,7 +37,12 @@ int main() {
   }
   glfwSetWindowTitle(window, "LearnOpenGL");
   glfwMakeContextCurrent(window);
-  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  //  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  Common::getInstance()->setWindow(window);
+  Instance->setFramebufferSizeCallback();
+  //  glfwSetWindowPosCallback(window,
+  //                           Common::getInstance()->set_window_pos_callback);
+  Instance->SetWindowPosCallback();
 
   // glad: load all OpenGL function pointers
   // ---------------------------------------
@@ -44,15 +52,28 @@ int main() {
   }
   int major, minor, rev;
   glfwGetVersion(&major, &minor, &rev);
-  const char * verStr = glfwGetVersionString();
-  std::cout << "major:" << major << std::endl << "minor:" << minor << std::endl << "rev:" << rev <<  std::endl;
+  const char *verStr = glfwGetVersionString();
+  std::cout << "major:" << major << std::endl
+            << "minor:" << minor << std::endl
+            << "rev:" << rev << std::endl;
   std::cout << "verString:" << verStr << std::endl;
+  int w, h;
+  Common::getInstance()->getWindowSize(w, h);
+  std::cout << "getWindowSize w : " << w << " h : " << h << std::endl;
+
   // render loop
   // -----------
   while (!glfwWindowShouldClose(window)) {
     // input
     // -----
     processInput(window);
+    Instance->processWindow();
+    //    Common::getInstance()->getFramebufferSize(&w, &h);
+    //    int l,t,r,b;
+    //    Common::getInstance()->getFrameSize(&l,&t,&r,&b);
+    //    Common::getInstance()->restoreWindow();
+    //    Instance->setClipboardString("Hello");
+    //    std::cout << "ret : " << Instance->getClipboardString() << std::endl;
 
     // render
     // ------
@@ -78,63 +99,7 @@ int main() {
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
-  int xPos, yPos;
-  glfwGetWindowPos(window, &xPos, &yPos);
-//  std::cout << "x = " <<  xPos << " y = " << yPos << std::endl;
-  // A : left move window
-  // D : right move window
-  // S : down move window
-  // W : up move window
-  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-    xPos -= 10;
-    glfwSetWindowPos(window, xPos, yPos);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-    xPos += 10;
-    glfwSetWindowPos(window, xPos, yPos);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-    yPos += 10;
-    glfwSetWindowPos(window, xPos, yPos);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-    yPos -= 10;
-    glfwSetWindowPos(window, xPos, yPos);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  
-  // resize window size:
-  // L : resize w
-  // J : shrink w
-  // I : resize h
-  // K : shrink h
-  int w, h;
-  glfwGetWindowSize(window, &w, &h);
-  if(glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
-    w -= 2;
-    glfwSetWindowSize(window, w, h);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  if(glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
-    w += 2;
-    glfwSetWindowSize(window, w, h);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  if(glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
-    h += 2;
-    glfwSetWindowSize(window, w, h);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  if(glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
-    h -= 2;
-    glfwSetWindowSize(window, w, h);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-  glfwGetKeyName(GLFW_KEY_W, 0);
-  
+  //  Common::getInstance()->processWindow();
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
@@ -144,5 +109,5 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
   // make sure the viewport matches the new window dimensions; note that width
   // and height will be significantly larger than specified on retina displays.
   glViewport(0, 0, width, height);
-  std::cout << "width:" << width << "height:" << height << std::endl;
+  std::cout << "width:" << width << " height:" << height << std::endl;
 }
