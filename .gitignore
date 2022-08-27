@@ -1,7 +1,9 @@
 .idea/*
 .cache/
 *.obj
+.DS_Store
 # ignores following folders
 bin/
 build/
 cmake-build-debug/
+out/

@@ -121,7 +121,7 @@ int main() {
   unsigned char *data =
       stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(),
                 &width, &height, &nrChannels, 0);
-  std::cout << "stbi_load => data:" << data << std::endl;
+//  std::cout << "stbi_load => data:" << data << std::endl;
   if (data) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
                  GL_UNSIGNED_BYTE, data);
@@ -130,6 +130,7 @@ int main() {
     std::cout << "Failed to load texture" << std::endl;
   }
   stbi_image_free(data);
+  
 
   // render loop
   // -----------
@@ -140,7 +141,7 @@ int main() {
 
     // render
     // ------
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // bind Texture
@@ -150,6 +151,7 @@ int main() {
     ourShader.use();
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    
 
     // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
     // etc.)
